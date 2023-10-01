@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import axios from 'axios';
 import LikeButton from './LikeButton';
-import Swal from 'sweetalert2'
+import Swal from 'sweetalert2';
 
 function TaskItem({ task, onLikeClick, onDelete }) {
   const [isLiked, setIsLiked] = useState(false);
@@ -10,9 +10,8 @@ function TaskItem({ task, onLikeClick, onDelete }) {
     axios.post(`http://localhost:8000/api/tasks/${task.id}/like`)
       .then((response) => {
         setIsLiked(true);
-        // Actualiza el contador de "likes" con el valor devuelto por el servidor
         task.likes_count = response.data.likesCount;
-        onLikeClick(task); // Llama a la función onLikeClick con la tarea actualizada
+        onLikeClick(task);
       })
       .catch((error) => {
         console.error('Error al dar "Like":', error);
@@ -20,28 +19,38 @@ function TaskItem({ task, onLikeClick, onDelete }) {
   };
 
   const handleDeleteClick = () => {
-    axios.delete(`http://localhost:8000/api/tasks/${task.id}`)
-      .then((response) => {
-        // Muestra un modal de éxito con SweetAlert2
-        Swal.fire({
-          title: 'Tarea eliminada',
-          text: response.data.message,
-          icon: 'success',
-          confirmButtonText: 'Aceptar',
-        }).then(() => {
-          window.location.reload();
-        });
-      })
-      .catch((error) => {
-        console.error('Error al eliminar la tarea:', error);
-        // Muestra un modal de error con SweetAlert2
-        Swal.fire({
-          title: 'Error al eliminar la tarea',
-          text: error.response.data.message,
-          icon: 'error',
-          confirmButtonText: 'Aceptar',
-        });
-      });
+    // Muestra una confirmación antes de eliminar la tarea
+    Swal.fire({
+      title: '¿Estás seguro?',
+      text: 'Esta acción no se puede deshacer. ¿Quieres eliminar esta tarea?',
+      icon: 'warning',
+      showCancelButton: true,
+      confirmButtonText: 'Sí, eliminar',
+      cancelButtonText: 'Cancelar',
+    }).then((result) => {
+      if (result.isConfirmed) {
+        axios.delete(`http://localhost:8000/api/tasks/${task.id}`)
+          .then((response) => {
+            Swal.fire({
+              title: 'Tarea eliminada',
+              text: response.data.message,
+              icon: 'success',
+              confirmButtonText: 'Aceptar',
+            }).then(() => {
+              window.location.reload();
+            });
+          })
+          .catch((error) => {
+            console.error('Error al eliminar la tarea:', error);
+            Swal.fire({
+              title: 'Error al eliminar la tarea',
+              text: error.response.data.message,
+              icon: 'error',
+              confirmButtonText: 'Aceptar',
+            });
+          });
+      }
+    });
   };
 
   return (
