@@ -15,7 +15,7 @@ class CreateTasksTable extends Migration
             $table->date('date');
             $table->string('state');
             $table->string('creator_name');
-            $table->timestamp('created_at')->useCurrent();
+            $table->timestamps();
         });
     }
 
