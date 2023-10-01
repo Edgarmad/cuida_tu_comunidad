@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use App\Task;
 use App\Like;
+use App\State;
 
 class TaskController extends Controller
 {

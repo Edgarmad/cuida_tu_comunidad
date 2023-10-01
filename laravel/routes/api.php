@@ -2,6 +2,7 @@
 
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
+use App\Http\Controllers\StateController;
 
 /*
 |--------------------------------------------------------------------------
@@ -20,3 +21,4 @@ Route::middleware('auth:api')->get('/user', function (Request $request) {
 
 Route::resource('tasks', 'TaskController')->except(['create', 'edit']);
 Route::post('tasks/{task}/like', 'LikeController@like');
+Route::get('states', [StateController::class, 'index']);
