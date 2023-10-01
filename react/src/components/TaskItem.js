@@ -23,11 +23,11 @@ function TaskItem({ task, onLikeClick, onDelete }) {
     // Cierra el modal y restablece el mensaje del modal
     setShowModal(false);
     setModalMessage('');
+    window.location.reload();
   };
   const handleDeleteClick = () => {
     axios.delete(`http://localhost:8000/api/tasks/${task.id}`)
       .then((response) => {
-        // Llama a la función onDelete para eliminar la tarea del estado del componente padre
         setShowModal(true);
         setModalMessage(response.data.message);
       })
