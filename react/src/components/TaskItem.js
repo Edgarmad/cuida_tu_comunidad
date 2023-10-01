@@ -1,11 +1,10 @@
 import React, { useState } from 'react';
 import axios from 'axios';
 import LikeButton from './LikeButton';
+import Swal from 'sweetalert2'
 
 function TaskItem({ task, onLikeClick, onDelete }) {
   const [isLiked, setIsLiked] = useState(false);
-  const [showModal, setShowModal] = useState(false);
-  const [modalMessage, setModalMessage] = useState('');
 
   const handleLikeClick = () => {
     axios.post(`http://localhost:8000/api/tasks/${task.id}/like`)
@@ -19,22 +18,29 @@ function TaskItem({ task, onLikeClick, onDelete }) {
         console.error('Error al dar "Like":', error);
       });
   };
-  const closeModal = () => {
-    // Cierra el modal y restablece el mensaje del modal
-    setShowModal(false);
-    setModalMessage('');
-    window.location.reload();
-  };
+
   const handleDeleteClick = () => {
     axios.delete(`http://localhost:8000/api/tasks/${task.id}`)
       .then((response) => {
-        setShowModal(true);
-        setModalMessage(response.data.message);
+        // Muestra un modal de éxito con SweetAlert2
+        Swal.fire({
+          title: 'Tarea eliminada',
+          text: response.data.message,
+          icon: 'success',
+          confirmButtonText: 'Aceptar',
+        }).then(() => {
+          window.location.reload();
+        });
       })
       .catch((error) => {
         console.error('Error al eliminar la tarea:', error);
-        setShowModal(true);
-        setModalMessage(error.response.data.message);
+        // Muestra un modal de error con SweetAlert2
+        Swal.fire({
+          title: 'Error al eliminar la tarea',
+          text: error.response.data.message,
+          icon: 'error',
+          confirmButtonText: 'Aceptar',
+        });
       });
   };
 
@@ -57,14 +63,6 @@ function TaskItem({ task, onLikeClick, onDelete }) {
       >
         Eliminar
       </button>
-      {showModal && (
-        <div className="fixed inset-0 flex items-center justify-center z-50">
-          <div className="bg-white p-4 shadow-md rounded-lg">
-            <p>{modalMessage}</p>
-            <button onClick={closeModal}>Cerrar</button>
-          </div>
-        </div>
-      )}
     </li>
   );
 }
