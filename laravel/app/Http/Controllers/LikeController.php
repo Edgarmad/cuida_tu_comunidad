@@ -13,7 +13,9 @@ class LikeController extends Controller
     {
         $like = new Like();
         $task->likes()->save($like);
+        $likesCount = $task->likes()->count();
 
-        return response()->json(['message' => 'Se agrego un like.']);
+        return response()->json(['message' => 'Se agrego un like.', 'likesCount' => $likesCount]);
     }
+
 }

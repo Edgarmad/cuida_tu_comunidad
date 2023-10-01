@@ -1,6 +1,22 @@
-import React from 'react';
+import React, { useState } from 'react';
+import axios from 'axios';
+import LikeButton from './LikeButton'; // Importa el nuevo componente
 
-function TaskItem({ task, onLikeClick }) {
+function TaskItem({ task }) {
+  const [isLiked, setIsLiked] = useState(false);
+  const [likesCount, setLikesCount] = useState(task.likes_count);
+
+  const handleLikeClick = () => {
+    axios.post(`http://localhost:8000/api/tasks/${task.id}/like`)
+      .then((response) => {
+        setIsLiked(true);
+        setLikesCount(response.data.likesCount);
+      })
+      .catch((error) => {
+        console.error('Error al dar "Like":', error);
+      });
+  };
+
   return (
     <li className="bg-white rounded shadow p-4">
       <h3 className="text-lg font-semibold">{task.title}</h3>
@@ -8,13 +24,12 @@ function TaskItem({ task, onLikeClick }) {
       <p className="text-gray-500">Fecha de Creación: {task.date}</p>
       <p className="text-gray-500">Estado: {task.state}</p>
       <p className="text-gray-500">Creador: {task.creator_name}</p>
-      <p className="text-gray-500">Likes: {task.likes_count}</p>
-      <button
-        className="bg-blue-500 text-white rounded px-2 py-1 mt-2"
-        onClick={() => onLikeClick(task.id)}
-      >
-        Dar Like
-      </button>
+      <p className="text-gray-500">Likes: {likesCount}</p>
+      {/* Utiliza el componente LikeButton */}
+      <LikeButton
+        isLiked={isLiked}
+        onLikeClick={handleLikeClick}
+      />
     </li>
   );
 }
