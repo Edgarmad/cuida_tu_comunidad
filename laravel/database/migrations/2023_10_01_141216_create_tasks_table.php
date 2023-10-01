@@ -12,9 +12,10 @@ class CreateTasksTable extends Migration
             $table->id();
             $table->string('title');
             $table->text('description');
-            $table->timestamp('created_at')->useCurrent();
+            $table->date('date');
             $table->string('state');
             $table->string('creator_name');
+            $table->timestamp('created_at')->useCurrent();
         });
     }
 
