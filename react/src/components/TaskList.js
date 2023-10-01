@@ -1,47 +1,41 @@
-import React, { useState } from 'react';
+import React,  { useState, useEffect } from 'react';
 import TaskItem from './TaskItem';
 
 function TaskList({ tasks, onLikeClick }) {
   const [searchTitle, setSearchTitle] = useState('');
   const [searchState, setSearchState] = useState('');
-
-  const filteredTasks = tasks.filter((task) => {
-    // Aplicar el filtro por título
-    if (searchTitle && !task.title.toLowerCase().includes(searchTitle.toLowerCase())) {
-      return false;
-    }
-
-    // Aplicar el filtro por estado
-    if (searchState && task.state !== searchState) {
-      return false;
-    }
-
-    return true;
-  });
-
+  const [filteredTasks, setFilteredTasks] = useState([]);
+  useEffect(() => {
+    // Filtra las tareas basadas en los criterios de búsqueda
+    const filtered = tasks.filter((task) => {
+      const titleMatch = task.title.toLowerCase().includes(searchTitle.toLowerCase());
+      const stateMatch = task.state.toLowerCase() === searchState.toLowerCase();
+  
+      // Filtra por título y/o estado según los criterios
+      return (titleMatch || !searchTitle) && (stateMatch || !searchState);
+    });
+  
+    // Actualiza el estado 'filteredTasks' con las tareas filtradas
+    setFilteredTasks(filtered);
+  }, [tasks, searchTitle, searchState]);
+  
   return (
     <div>
       <h2>Lista de Tareas</h2>
       <div>
-        <label>Buscar por Título:</label>
-        <input
-          type="text"
-          value={searchTitle}
-          onChange={(e) => setSearchTitle(e.target.value)}
-        />
-      </div>
-      <div>
-        <label>Filtrar por Estado:</label>
-        <select
-          value={searchState}
-          onChange={(e) => setSearchState(e.target.value)}
-        >
-          <option value="">Todos</option>
-          <option value="estado1">Estado 1</option>
-          <option value="estado2">Estado 2</option>
-          {/* Agrega más opciones de estado según tu aplicación */}
-        </select>
-      </div>
+      <input
+        type="text"
+        placeholder="Buscar por título"
+        value={searchTitle}
+        onChange={(e) => setSearchTitle(e.target.value)}
+      />
+      <input
+        type="text"
+        placeholder="Buscar por estado"
+        value={searchState}
+        onChange={(e) => setSearchState(e.target.value)}
+      />
+    </div>
       <ul className="space-y-4">
         {filteredTasks.map((task) => (
           <TaskItem key={task.id} task={task} onLikeClick={onLikeClick} />
@@ -52,4 +46,3 @@ function TaskList({ tasks, onLikeClick }) {
 }
 
 export default TaskList;
-
