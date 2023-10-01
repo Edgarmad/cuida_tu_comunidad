@@ -19,15 +19,22 @@ function TaskItem({ task, onLikeClick, onDelete }) {
         console.error('Error al dar "Like":', error);
       });
   };
-
+  const closeModal = () => {
+    // Cierra el modal y restablece el mensaje del modal
+    setShowModal(false);
+    setModalMessage('');
+  };
   const handleDeleteClick = () => {
     axios.delete(`http://localhost:8000/api/tasks/${task.id}`)
       .then((response) => {
         // Llama a la función onDelete para eliminar la tarea del estado del componente padre
-        onDelete(task.id);
+        setShowModal(true);
+        setModalMessage(response.data.message);
       })
       .catch((error) => {
         console.error('Error al eliminar la tarea:', error);
+        setShowModal(true);
+        setModalMessage(error.response.data.message);
       });
   };
 
@@ -42,7 +49,7 @@ function TaskItem({ task, onLikeClick, onDelete }) {
       <LikeButton
         isLiked={isLiked}
         taskId={task.id}
-        onLikeClick={handleLikeClick} // Pasa la función handleLikeClick
+        onLikeClick={handleLikeClick}
       />
       <button
         className="bg-red-500 text-white rounded px-2 py-1 mt-2"
@@ -50,6 +57,14 @@ function TaskItem({ task, onLikeClick, onDelete }) {
       >
         Eliminar
       </button>
+      {showModal && (
+        <div className="fixed inset-0 flex items-center justify-center z-50">
+          <div className="bg-white p-4 shadow-md rounded-lg">
+            <p>{modalMessage}</p>
+            <button onClick={closeModal}>Cerrar</button>
+          </div>
+        </div>
+      )}
     </li>
   );
 }

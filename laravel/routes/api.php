@@ -22,3 +22,4 @@ Route::middleware('auth:api')->get('/user', function (Request $request) {
 Route::resource('tasks', 'TaskController')->except(['create', 'edit']);
 Route::post('tasks/{task}/like', 'LikeController@like');
 Route::get('states', [StateController::class, 'index']);
+Route::delete('tasks/{task}', 'TaskController@destroy');
