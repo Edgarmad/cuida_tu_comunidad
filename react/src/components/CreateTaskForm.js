@@ -1,27 +1,26 @@
 import React, { useState, useEffect } from 'react';
-import axios from 'axios'; // Importa axios para realizar solicitudes HTTP
+import axios from 'axios';
 
 function CreateTaskForm({ onTaskCreate }) {
   const [taskData, setTaskData] = useState({
     title: '',
     description: '',
     date: '',
-    state: '', // Inicialmente, el estado está vacío
+    state: '',
     creator_name: '',
   });
 
-  const [states, setStates] = useState([]); // Estado para almacenar la lista de estados
+  const [states, setStates] = useState([]);
 
   useEffect(() => {
-    // Realiza una solicitud GET para obtener la lista de estados
     axios.get('http://localhost:8000/api/states')
       .then(response => {
-        setStates(response.data.states); // Asigna la lista de estados a la variable de estado
+        setStates(response.data.states);
       })
       .catch(error => {
         console.error('Error al obtener la lista de estados', error);
       });
-  }, []); // El segundo argumento vacío asegura que esta solicitud se realice solo una vez al montar el componente
+  }, []);
 
   const handleChange = (e) => {
     const { name, value } = e.target;
@@ -33,9 +32,7 @@ function CreateTaskForm({ onTaskCreate }) {
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    //llama a la función onTaskCreate para actualizar el estado de la lista de tareas.
     onTaskCreate(taskData);
-    // Limpia el formulario
     setTaskData({
       title: '',
       description: '',
@@ -46,49 +43,49 @@ function CreateTaskForm({ onTaskCreate }) {
   };
 
   return (
-    <div>
-      <h2>Crear Nueva Tarea</h2>
+    <div className="max-w-md mx-auto mt-8">
+      <h2 className="text-2xl font-semibold mb-4">Crear Nueva Tarea</h2>
       <form onSubmit={handleSubmit} className="space-y-4">
         <div>
-          <label htmlFor="title">Título:</label>
+          <label htmlFor="title" className="block">Título:</label>
           <input
             type="text"
             id="title"
             name="title"
             value={taskData.title}
             onChange={handleChange}
-            className="border rounded p-2"
+            className="border rounded p-2 w-full"
           />
         </div>
         <div>
-          <label htmlFor="description">Descripción:</label>
+          <label htmlFor="description" className="block">Descripción:</label>
           <textarea
             id="description"
             name="description"
             value={taskData.description}
             onChange={handleChange}
-            className="border rounded p-2"
+            className="border rounded p-2 w-full h-32"
           />
         </div>
         <div>
-          <label htmlFor="date">Fecha:</label>
+          <label htmlFor="date" className="block">Fecha:</label>
           <input
             type="date"
             id="date"
             name="date"
             value={taskData.date}
             onChange={handleChange}
-            className="border rounded p-2"
+            className="border rounded p-2 w-full"
           />
         </div>
         <div>
-          <label htmlFor="state">Estado:</label>
+          <label htmlFor="state" className="block">Estado:</label>
           <select
             id="state"
             name="state"
             value={taskData.state}
             onChange={handleChange}
-            className="border rounded p-2"
+            className="border rounded p-2 w-full"
           >
             <option value="">Selecciona un estado</option>
             {states.map((state, index) => (
@@ -97,17 +94,17 @@ function CreateTaskForm({ onTaskCreate }) {
           </select>
         </div>
         <div>
-          <label htmlFor="creator_name">Nombre del Creador:</label>
+          <label htmlFor="creator_name" className="block">Nombre del Creador:</label>
           <input
             type="text"
             id="creator_name"
             name="creator_name"
             value={taskData.creator_name}
             onChange={handleChange}
-            className="border rounded p-2"
+            className="border rounded p-2 w-full"
           />
         </div>
-        <button type="submit" className="bg-blue-500 text-white rounded p-2">
+        <button type="submit" className="bg-blue-500 text-white rounded p-2 w-full">
           Crear Tarea
         </button>
       </form>

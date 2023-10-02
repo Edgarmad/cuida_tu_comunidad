@@ -51,9 +51,13 @@ function App() {
   }, []);
 
   return (
-    <div className="container mx-auto p-4">
-      <CreateTaskForm onTaskCreate={handleTaskCreate} /> {}
-      <TaskList tasks={tasks} onLikeClick={handleLikeClick} />
+    <div className="bg-gray-100 min-h-screen py-6 px-4 sm:px-6 lg:px-8">
+      <div className="max-w-3xl mx-auto">
+        <h1 className="text-2xl font-semibold text-gray-800 mb-6">Lista de Tareas</h1>
+
+        <CreateTaskForm onTaskCreate={handleTaskCreate} /> {}
+        <TaskList tasks={tasks} onLikeClick={handleLikeClick} />
+      </div>
     </div>
   );
 }
