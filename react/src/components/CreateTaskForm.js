@@ -33,8 +33,7 @@ function CreateTaskForm({ onTaskCreate }) {
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    // Envía los datos de la nueva tarea al servidor (puedes utilizar una solicitud HTTP para esto).
-    // Luego, llama a la función onTaskCreate para actualizar el estado de la lista de tareas.
+    //llama a la función onTaskCreate para actualizar el estado de la lista de tareas.
     onTaskCreate(taskData);
     // Limpia el formulario
     setTaskData({
