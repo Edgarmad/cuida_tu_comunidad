@@ -17,8 +17,9 @@ Asegúrate de tener instalados lo siguiente en tu sistema:
 Sigue estos pasos para configurar el backend de la aplicación:
 
 1. Para configurar la base de datos desde una terminal dirígete a la carpeta de laravel y ejecuta los siguientes comandos:
-    -php artisan migrate
-    -php artisan db:seed --class=StatesTableSeeder
+    ```bash
+    php artisan migrate
+    php artisan db:seed --class=StatesTableSeeder
 2. Para levantar el servidor ejecute el siguiente comando en la carpeta de laravel:
     -php artisan serve
 Asegurese de que este en el puerto 8000(por defecto este es)
@@ -28,6 +29,8 @@ Asegurese de que este en el puerto 8000(por defecto este es)
 Sigue estos pasos para configurar el frontend de la aplicación:
 
 1. Desde una terminal dirígete a la carpeta de react y ejecute el siguiente comando:
-    -npm install
+    ```bash
+    npm install
 2. Para levantar el servidor ejecute el siguiente comando en la carpeta de react:
-    -npm start
+    ```bash
+    npm start
