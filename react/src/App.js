@@ -52,7 +52,7 @@ function App() {
 
   return (
     <div className="container mx-auto p-4">
-      <CreateTaskForm onTaskCreate={handleTaskCreate} /> {/* Agrega el formulario aquí */}
+      <CreateTaskForm onTaskCreate={handleTaskCreate} /> {}
       <TaskList tasks={tasks} onLikeClick={handleLikeClick} />
     </div>
   );
