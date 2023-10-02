@@ -54,9 +54,9 @@ function TaskItem({ task, onLikeClick, onDelete }) {
   };
 
   return (
-    <li className="bg-white rounded shadow p-4">
-      <h3 className="text-lg font-semibold">{task.title}</h3>
-      <p className="text-gray-600">{task.description}</p>
+    <li className="bg-white rounded shadow p-4 mb-4">
+      <h3 className="text-lg font-semibold mb-2">Titulo: {task.title}</h3>
+      <p className="text-gray-600 mb-2">Descripción: {task.description}</p>
       <p className="text-gray-500">Fecha de Creación: {task.date}</p>
       <p className="text-gray-500">Estado: {task.state}</p>
       <p className="text-gray-500">Creador: {task.creator_name}</p>
@@ -67,7 +67,7 @@ function TaskItem({ task, onLikeClick, onDelete }) {
         onLikeClick={handleLikeClick}
       />
       <button
-        className="bg-red-500 text-white rounded px-2 py-1 mt-2"
+        className="bg-red-500 text-white rounded px-2 py-1 m-2 hover:bg-red-600"
         onClick={handleDeleteClick}
       >
         Eliminar
