@@ -23,7 +23,8 @@ Sigue estos pasos para configurar el backend de la aplicación:
     php artisan migrate
     php artisan db:seed --class=StatesTableSeeder
 3. Para levantar el servidor ejecute el siguiente comando en la carpeta de laravel:
-    -php artisan serve
+    ```bash
+    php artisan serve
 Asegurese de que este en el puerto 8000(por defecto este es)
 
 ## Configuración del Frontend
