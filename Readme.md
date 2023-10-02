@@ -15,12 +15,14 @@ Asegúrate de tener instalados lo siguiente en tu sistema:
 ## Configuración del Backend
 
 Sigue estos pasos para configurar el backend de la aplicación:
-
-1. Para configurar la base de datos desde una terminal dirígete a la carpeta de laravel y ejecuta los siguientes comandos:
+1. Instalar dependencias del proyecto, desde una terminal dirígete a la carpeta de laravel y ejecuta el siguiente comando
+    ```bash
+    composer install
+2. Para configurar la base de datos desde una terminal dirígete a la carpeta de laravel y ejecuta los siguientes comandos:
     ```bash
     php artisan migrate
     php artisan db:seed --class=StatesTableSeeder
-2. Para levantar el servidor ejecute el siguiente comando en la carpeta de laravel:
+3. Para levantar el servidor ejecute el siguiente comando en la carpeta de laravel:
     -php artisan serve
 Asegurese de que este en el puerto 8000(por defecto este es)
 
